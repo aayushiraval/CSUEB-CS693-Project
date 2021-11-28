@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: cs693
+  labels:
+    app: api
+spec:
+  replicas: 1
+  selector:
+    # This must match the labels we set on the pod
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      # Set labels on the pod.
+      # This is used in the deployment selector.
+      labels:
+        app: api
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: '/metrics'
+        prometheus.io/port: '80'
+    spec:
+      volumes:
+      - name: credentials-secret
+        secret:
+          secretName: credentials
+      containers:
+      - name: api
+        imagePullPolicy: Never
+        image: cs693/api:latest
+        env:
+        - name: APP_ENV
+          value: "local"
+        volumeMounts:
+        - name: credentials-secret
+          mountPath: /etc/secrets/credentials
+          readOnly: true
+        command: ["./startup.sh"]
+        resources:
+          limits:
+            cpu: "1500m"
+            memory: "1500Mi"
+            ephemeral-storage: "10Gi"
+          requests:
+            cpu: "1000m"
+            memory: "1000Mi"
+            ephemeral-storage: "2Gi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+  namespace: cs693
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+    targetPort: 80  # Container port
+  selector:
+    app: api

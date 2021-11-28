@@ -1,0 +1,14 @@
+auth:
+  rootPassword: root
+
+# standalone is the default, but let's be explicit here.
+architecture: standalone
+
+metrics:
+  enabled: false
+
+readinessProbe:
+  enabled: false
+
+livenessProbe:
+  enabled: false
