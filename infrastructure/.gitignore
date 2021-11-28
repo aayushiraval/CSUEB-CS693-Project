@@ -1,0 +1,30 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*__pycache__
+
+# Pytest
+.pytest_cache
+*.pyc
+
+# Terraform module directory
+.terraform
+
+# Terraform installation files
+terraform*
+
+# kubectl config files
+kubeconfig*
+
+# Ignore generated kubectl ConfigMap
+**/config-map-aws-auth_*
+
+# Ignore kubernetes secrets files
+git-creds.json
+credentials.*.json
+
+# Cloudfront PEM for local dev
+cloudfront-pem.json
+
+# Ignore environment specific helm values
+prometheus_mongodb_exporter_*.json
+

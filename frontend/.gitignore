@@ -1,0 +1,14 @@
+# Node modules
+node_modules/
+
+# Deployment distribution
+dist/
+
+# VSCode
+.vscode
+
+# DS_Store
+.DS_Store
+
+# emacs autosave backups
+*.*~

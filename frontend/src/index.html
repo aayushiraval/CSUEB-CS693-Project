@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta charset="UTF-8">
+    <title>Tartarus</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script>
+      // This line does not seem to work inside a component, so putting here
+      // for now.
+    </script>
+    <!-- Google Sign In Requirements -->
+    <script src="https://apis.google.com/js/platform.js"></script>
+    <script>
+      gapi.load('auth2', function(){
+        auth2 = gapi.auth2.init({
+          client_id: '518806613341-b5umd7ms786frlll22okpu3k5jn7gvaa.apps.googleusercontent.com',
+          fetch_basic_profile: false,
+          scope: 'profile email'
+        }).then(() => {
+          var react = document.createElement('script');
+          react.type = "text/javascript";
+          react.src = '/bundle.js?releaseId=$CACHE_ID$';
+          document.body.appendChild(react);
+        });
+      });
+    </script>
+  </body>
+</html>
