@@ -1,0 +1,26 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*__pycache__
+
+# Pytest
+.pytest_cache
+*.pyc
+
+# Coverage
+htmlcov*
+.coverage
+
+# Distribution / packaging
+*.egg-info/
+
+# Secret Credentials Files
+credentials.*.json
+
+# Mac nonsense
+*.DS_Store
+
+# Pycharm
+../.idea
+
+# pyenv python version
+.python-version
