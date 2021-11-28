@@ -1,10 +1,6 @@
 from datetime import datetime
-from copy import copy
-import math
 
 import mongoengine
-
-from app import config
 
 MONGO_CONNECTION_PARAMETERS = {
     'host': 'mongodb://elearning-mongo-mongodb.default.svc.cluster.local',
