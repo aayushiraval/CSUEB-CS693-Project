@@ -8,11 +8,12 @@ module.exports = merge(common, {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      API_HOST: JSON.stringify('http://localhost:8080'),
+      API_HOST: JSON.stringify('https://a837b00f7ed324e3e82c6465ecfb274a-644369061.us-east-1.elb.amazonaws.com:8080'),
       ENV_NAME: JSON.stringify('local')
     })
   ],
   devServer: {
+    https: true,
     contentBase: './src',
     hot: true,
     disableHostCheck: true,
