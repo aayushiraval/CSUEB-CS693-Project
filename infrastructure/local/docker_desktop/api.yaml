@@ -28,8 +28,8 @@ spec:
           secretName: credentials
       containers:
       - name: api
-        imagePullPolicy: Never
         image: cs693/api:latest
+        imagePullPolicy: Always
         env:
         - name: APP_ENV
           value: "local"
@@ -38,15 +38,6 @@ spec:
           mountPath: /etc/secrets/credentials
           readOnly: true
         command: ["./startup.sh"]
-        resources:
-          limits:
-            cpu: "1500m"
-            memory: "1500Mi"
-            ephemeral-storage: "10Gi"
-          requests:
-            cpu: "1000m"
-            memory: "1000Mi"
-            ephemeral-storage: "2Gi"
 ---
 apiVersion: v1
 kind: Service

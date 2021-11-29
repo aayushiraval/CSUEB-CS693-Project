@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: webapp
+  namespace: cs693
   labels:
     app: webapp
 spec:
@@ -19,23 +20,17 @@ spec:
     spec:
       containers:
       - name: webapp
-        imagePullPolicy: Never
         image: local/webapp:latest
+        imagePullPolicy: Always
         env:
         - name: APP_ENV
           value: "local"
-        resources:
-          limits:
-            cpu: "1000m"
-            memory: "1000Mi"
-          requests:
-            cpu: "500m"
-            memory: "500Mi"
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: webapp
+  namespace: cs693
 spec:
   type: LoadBalancer
   ports:
