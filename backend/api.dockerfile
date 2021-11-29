@@ -15,5 +15,7 @@ RUN pip3 install -r /backend/requirements/common.txt
 # Add backend directory to the Docker source.
 ADD . /backend
 
+ENV PYTHONPATH "${PYTHONPATH}:/backend/app"
+
 # Switch to the backend directory.
 WORKDIR /backend
