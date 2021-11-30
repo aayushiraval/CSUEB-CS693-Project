@@ -98,7 +98,7 @@ export default class SegmentationProcessor implements VideoFrameProcessor {
         // Load the model.
         if (!this.model) {
             // @ts-ignore
-            MODEL_EMOTION = await tf.loadLayersModel("https://raw.githubusercontent.com/tupleblog/face-classification-js/master/docs/model/emotion/model.json");
+            MODEL_EMOTION = await tf.loadLayersModel("https://raw.githubusercontent.com/aayushiraval/CS693-models/main/model/model.json");
             this.model = await blazeface.load();
         }
         const inputCanvas = buffers[0].asCanvasElement();
