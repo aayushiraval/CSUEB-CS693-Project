@@ -28,8 +28,8 @@ spec:
           secretName: credentials
       containers:
       - name: api
-        image: cs693/api:latest
         imagePullPolicy: Always
+        image: 190601597280.dkr.ecr.us-east-1.amazonaws.com/asav-eks-test:api
         env:
         - name: APP_ENV
           value: "local"
@@ -38,16 +38,3 @@ spec:
           mountPath: /etc/secrets/credentials
           readOnly: true
         command: ["./startup.sh"]
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: api
-  namespace: cs693
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 8080
-    targetPort: 80  # Container port
-  selector:
-    app: api

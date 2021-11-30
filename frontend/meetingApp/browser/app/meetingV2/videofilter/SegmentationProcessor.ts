@@ -21,9 +21,9 @@ var EMOTION_WEIGHTS = {
   'Angry': 0.27,
   'Disgust': 0.20,
   'Fear': 0.30,
-  'Happy': 0.79,
+  'Happy': 0.95,
   'Sad': 0.40,
-  'Surprise': 0.70,
+  'Surprise': 0.90,
   'Neutral': 0.95
 }
 var LABEL_EMOTIONS = {
@@ -104,7 +104,7 @@ export default class SegmentationProcessor implements VideoFrameProcessor {
         }
 
         const returnTensors = false; // Pass in `true` to get tensors back, rather than values.
-        const annotateBoxes = true;
+        const annotateBoxes = false;
         let predictions = await this.model.estimateFaces(inputCanvas, returnTensors);
 
         /*
@@ -157,6 +157,13 @@ export default class SegmentationProcessor implements VideoFrameProcessor {
                 // @ts-ignore
                 var engagement_score = (result.percent / 100.0 * EMOTION_WEIGHTS[result.label]).toPrecision(3);
                 engagement_score = parseFloat(engagement_score).toFixed(3);
+                // if (["Happy", "Surprise", "Neutral"].includes(result.label) == true){
+                //     ctx.fillStyle = "green";
+                //     ctx.fillText(result.label.concat(', Engaged'), 10, 90);
+                // } else   {
+                //     ctx.fillStyle = "red";
+                //     ctx.fillText(result.label.concat(', Not Engaged'), 10, 90);
+                // }
 
                 // @ts-ignore
                 if (engagement_score >= ENGAGEMENT_INDEX_THRESHOLD) {
@@ -165,7 +172,7 @@ export default class SegmentationProcessor implements VideoFrameProcessor {
                     if (annotateBoxes) {
                         const landmarks = predictions[i].landmarks;
 
-                        ctx.fillStyle = "rgba(0,0,255,0.25)";
+                        ctx.fillStyle = "rgba(0,0,255,1)";
                         for (let j = 0; j < landmarks.length - 4; j++) {
                             const x = landmarks[j][0];
                             const y = landmarks[j][1];

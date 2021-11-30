@@ -564,7 +564,7 @@ export class DemoMeetingApp
       e.preventDefault();
       this.meeting = (document.getElementById('inputMeeting') as HTMLInputElement).value;
       this.name = (document.getElementById('inputName') as HTMLInputElement).value;
-      this.name = "Test";
+      this.name = (document.getElementById('inputName') as HTMLInputElement).value;
       this.region = (document.getElementById('inputRegion') as HTMLInputElement).value;
       this.enableSimulcast = (document.getElementById('simulcast') as HTMLInputElement).checked;
       this.enableEventReporting = (document.getElementById('event-reporting') as HTMLInputElement).checked;

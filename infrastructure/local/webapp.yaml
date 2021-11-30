@@ -20,21 +20,8 @@ spec:
     spec:
       containers:
       - name: webapp
-        image: local/webapp:latest
         imagePullPolicy: Always
+        image: 190601597280.dkr.ecr.us-east-1.amazonaws.com/asav-eks-test:webapp
         env:
         - name: APP_ENV
           value: "local"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: webapp
-  namespace: cs693
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 3000
-    targetPort: 3000
-  selector:
-    app: webapp
