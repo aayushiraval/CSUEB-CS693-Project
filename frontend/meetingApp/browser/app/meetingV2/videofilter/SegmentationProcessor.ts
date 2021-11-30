@@ -85,9 +85,6 @@ function cropFace(rect: { topLeft: number[]; bottomRight: number[]; }, videoCanv
 }
 
 export default class SegmentationProcessor implements VideoFrameProcessor {
-    static ATTENTION_COLOR = "rgba(0, 255, 0, 0.1)";
-    static DISTRACTED_COLOR = "rgba(255, 0, 0, 0.2)"
-
 
     private model: any | undefined = undefined;
 
@@ -107,7 +104,7 @@ export default class SegmentationProcessor implements VideoFrameProcessor {
         }
 
         const returnTensors = false; // Pass in `true` to get tensors back, rather than values.
-        const annotateBoxes = false;
+        const annotateBoxes = true;
         let predictions = await this.model.estimateFaces(inputCanvas, returnTensors);
 
         /*
@@ -145,16 +142,9 @@ export default class SegmentationProcessor implements VideoFrameProcessor {
                 const start = predictions[i].topLeft;
                 const end = predictions[i].bottomRight;
                 const size = [end[0] - start[0], end[1] - start[1]];
-                // if (String(predictions[i].probability[0]).substring(0,5) < 0.989) {
-                //     ctx.fillStyle = SegmentationProcessor.DISTRACTED_COLOR;
-                // } else {
-                //   ctx.fillStyle = SegmentationProcessor.ATTENTION_COLOR;
-                // }
-                // ctx.fillStyle = 'rgba(76,169,235,0)';
+
                 ctx.strokeStyle = '#4ca9eb';
                 ctx.strokeRect(start[0], start[1], size[0], size[1]);
-                // ctx.strokeStyle = '#4ca9eb';
-                // ctx.strokeRect(start[0], start[1], size[0], size[1]); // face
 
                 cropFace(predictions[i], inputCanvas);
 
@@ -172,21 +162,20 @@ export default class SegmentationProcessor implements VideoFrameProcessor {
                 if (engagement_score >= ENGAGEMENT_INDEX_THRESHOLD) {
                     ctx.fillStyle = "green";
                     ctx.fillText(result.label.concat(', Engaged:' + engagement_score), 10, 90);
+                    if (annotateBoxes) {
+                        const landmarks = predictions[i].landmarks;
+
+                        ctx.fillStyle = "rgba(0,0,255,0.25)";
+                        for (let j = 0; j < landmarks.length - 4; j++) {
+                            const x = landmarks[j][0];
+                            const y = landmarks[j][1];
+                            ctx.fillRect(x, y, 20, 20);
+                        }
+                    }
                 } else {
                     ctx.fillStyle = "red";
                     ctx.fillText(result.label.concat(', Not Engaged:' + engagement_score), 10, 90);
                 }
-
-                // if (annotateBoxes) {
-                //   const landmarks = predictions[i].landmarks;
-                //
-                //   ctx.fillStyle = "blue";
-                //   for (let j = 0; j < landmarks.length - 4; j++) {
-                //     const x = landmarks[j][0];
-                //     const y = landmarks[j][1];
-                //     ctx.fillRect(x, y, 5, 5);
-                //   }
-                // }
             }
         }
         return buffers;
