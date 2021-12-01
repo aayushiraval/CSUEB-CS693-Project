@@ -89,8 +89,9 @@ def require_oauth_token(api_method):  # noqa: C901
                 user.google_user_id = token_user_id
                 user.save()
             except User.DoesNotExist:
-                if not token_email.endswith("csueastbay.edu"):
-                    return error("Invalid OAuth access token email", 401)
+                logger.info(token_email)
+                # if not token_email.endswith("csueastbay.edu"):
+                #     return error("Invalid OAuth access token email", 401)
         if user is None:
             # Make the read-only user.
             user_info = get_oauth_user_info(access_token)
@@ -115,8 +116,7 @@ def require_oauth_token(api_method):  # noqa: C901
                     user = User.objects.get(google_user_id=token_user_id)
                 except User.DoesNotExist:
                     return error('Authenticated User not found', 401)
-        elif (user.email != token_email and
-              token_email.endswith("csueastbay.edu")):
+        elif user.email != token_email:
             # The email address has changed, update our records.
             try:
                 user.email = token_email
