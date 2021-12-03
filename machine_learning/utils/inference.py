@@ -24,7 +24,7 @@ def detect_faces(detection_model, gray_image_array):
 
 
 def predict_engagement(emotion_label, emotion_percentage):
-    getcontext().prec = 3
+    getcontext().prec = 3  # set decimal precision
     emotion_weight = EMOTION_WEIGHTS[emotion_label]
     engagement_score = Decimal((emotion_percentage / 100.0) * emotion_weight)
     return engagement_score
