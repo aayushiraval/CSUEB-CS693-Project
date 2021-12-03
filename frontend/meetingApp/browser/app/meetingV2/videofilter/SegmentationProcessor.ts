@@ -104,7 +104,7 @@ export default class SegmentationProcessor implements VideoFrameProcessor {
         }
 
         const returnTensors = false; // Pass in `true` to get tensors back, rather than values.
-        const annotateBoxes = false;
+        const annotateBoxes = true;
         let predictions = await this.model.estimateFaces(inputCanvas, returnTensors);
 
         /*
